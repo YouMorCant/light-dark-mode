@@ -1,0 +1,9 @@
+html{
+    /* stops padding from stetching the page dimensions */
+    box-sizing: border-box;
+}
+body{
+    /* makes the website the hole screen size with no margins before content */
+    margin: 0;
+    min-height: 100vh;
+}
