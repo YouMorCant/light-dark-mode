@@ -7,12 +7,12 @@ const image2 = document.getElementById('image2');
 const image3 = document.getElementById('image3');
 const textBox = document.getElementById('text-box');
 
-//declare var for attributes of theme other than name
-var modeTitle = '';
-var color1 = '';
-var color2 ='';
-var icon1 = '';
-var icon2 = '';
+//declare null for attributes of theme other than name
+let modeTitle = '';
+let color1 = '';
+let color2 ='';
+let icon1 = '';
+let icon2 = '';
 
 //Dark or Light Images
 function imageMode(color){
@@ -22,25 +22,20 @@ function imageMode(color){
 }
 
 //Change attributes based on mode
-function changeMode(mode){
+function changeMode(mode, isDark){
+    //set Attributes that are either 'dark' or 'light'
     document.documentElement.setAttribute('data-theme', mode);
     localStorage.setItem('theme',mode);
     imageMode(mode);
 
-    if (mode === 'dark'){
-        modeTitle = 'Dark';
-        color1 = '0 0 0';
-        color2 = '255 255 255';
-        icon1= 'fa-sun';
-        icon2 = 'fa-moon';
-    }else{
-        modeTitle = 'Light';
-        color1 = '255 255 255';
-        color2 = '0 0 0';
-        icon1 = 'fa-moon';
-        icon2= 'fa-sun';
-    }
-
+    //set attributes other than 'dark' and 'light'
+    modeTitle = isDark ? 'Dark': 'Light';
+    color1 = isDark ? '0 0 0': '255 255 255';
+    color2 = isDark ? '255 255 255': '0 0 0';
+    icon1= isDark ? 'fa-sun': 'fa-moon';
+    icon2 = isDark ? 'fa-moon': 'fa-sun';
+    
+    //set remaining attributes with strings
     nav.style.backgroundColor = `rgb(${color1} / 50%)`;
     textBox.style.backgroundColor = `rgb(${color2} / 50%)`;
     toggleIcon.children[0].textContent = `${modeTitle} Mode`;
@@ -51,12 +46,15 @@ function changeMode(mode){
 //Switch Theme Dynamically
 function switchTheme(event){
     var mode ='';
+    var isDark = false;
     if (event.target.checked) {
         mode ='dark';
+        isDark = true;
     } else {
         mode = 'light';
+        isDark = false;
     }
-    changeMode(mode);
+    changeMode(mode,isDark);
 }
 
 //Event Listeners
